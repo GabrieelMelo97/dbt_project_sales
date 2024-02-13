@@ -25,14 +25,13 @@ Este projeto é uma exploração prática do framework dbt (data build tool), cr
 ## Como executar o projeto
 
 1. Clone o repositório:
-2. Instale o poetry e execute:
-
-`` poetry install & poetry shell ``
-
-3. Execute os comandos abaixo para iniciar o postgresql:
+2. Instale o poetry
+3. Execute os comandos abaixo para iniciar o postgresql e o poetry:
 
 `` make init ``
 
-4. Execute o comando abaixo para iniciar o pipeline:
+4. Execute o comando abaixo para iniciar o pipeline DBT:
 
-`` dbt run ``
+`` make run ``
+
+5. Pronto, as tabelas devem estar disponíveis no postgresql :]
