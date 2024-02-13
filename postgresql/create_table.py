@@ -1,7 +1,9 @@
-import pandas as pd
-from sqlalchemy import create_engine
 import os
+
+import pandas as pd
 import psycopg2
+
+from sqlalchemy import create_engine
 
 
 # Configurações de conexão com o banco de dados
@@ -10,8 +12,9 @@ db_config = {
     "password": "admin",
     "host": "localhost",
     "port": 5432,  # A porta do PostgreSQL que você mapeou para o host
-    "database": "project_sales"
+    "database": "project_sales",
 }
+
 
 def file_generator(directory):
     """
@@ -52,14 +55,14 @@ def get_column_names(schema, table_name, connection_params):
     try:
         # Establish a connection to the PostgreSQL database
         connection = psycopg2.connect(**connection_params)
-        
+
         # Execute a query to retrieve table information (columns)
         with connection.cursor() as cursor:
             cursor.execute(f"SELECT * FROM {schema}.{table_name} LIMIT 0")
-            
+
             # Get column names
             column_names = [desc[0] for desc in cursor.description]
-            
+
             return column_names
 
     except Exception as e:
@@ -89,7 +92,7 @@ def execute_sql_file(file_path, connection_params):
         cursor = connection.cursor()
 
         # Read the content of the SQL file
-        with open(file_path, 'r') as sql_file:
+        with open(file_path, "r") as sql_file:
             sql_query = sql_file.read()
 
         # Execute the content of the SQL file
@@ -126,17 +129,18 @@ def insert_data(path_files, db_config):
         table_name = file_name[:-4]
 
         # Load data from the CSV file into a Pandas DataFrame
-        data = pd.read_csv(csv_file_path, sep=';')
-        data.columns = get_column_names('public', table_name, db_config)
+        data = pd.read_csv(csv_file_path, sep=";")
+        data.columns = get_column_names("public", table_name, db_config)
 
         # Create a connection to the PostgreSQL database
-        engine = create_engine(f"postgresql://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}")
+        engine = create_engine(
+            f"postgresql://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}"
+        )
 
         # Insert data from the DataFrame into the PostgreSQL table
-        data.to_sql(table_name, engine, if_exists='append', index=False)
+        data.to_sql(table_name, engine, if_exists="append", index=False)
 
 
-
-if __name__ == '__main__':
-    execute_sql_file('postgresql/init.sql', db_config)
-    insert_data('data/', db_config)
+if __name__ == "__main__":
+    execute_sql_file("postgresql/init.sql", db_config)
+    insert_data("data/", db_config)

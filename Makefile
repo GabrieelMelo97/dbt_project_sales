@@ -1,6 +1,5 @@
 .PHONY: clean
 clean:
-	docker rm -f $(docker ps -aqf "name=meu-postgres")
 	rm -rf .venv build dist **/*.egg-info .pytest_cache node_modules .coverage
 
 
