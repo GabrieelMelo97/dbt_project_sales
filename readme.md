@@ -30,8 +30,13 @@ Este projeto é uma exploração prática do framework dbt (data build tool), cr
 
 `` make init ``
 
-4. Execute o comando abaixo para iniciar o pipeline DBT:
+4. Faça as configurações iniciais do DBT, setando o banco de dados e nome do projeto como "dbt_project_sales":
 
-`` make run ``
+`` cd dbt_project``
+`` dbt init ``
 
-5. Pronto, as tabelas devem estar disponíveis no postgresql :]
+5. Execute o comando abaixo para iniciar o pipeline DBT:
+
+`` dbt run ``
+
+6. Pronto, as tabelas devem estar disponíveis no postgresql :]
